@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BTC Blockchain Explorer</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="./assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet"/>
+</head>
+
+<body class="">
+<div class="wrapper">
+    <div class="main-panel">
+        <div class="content">
+            <h4><a href="/"><i class="fa fa-arrow-left" aria-hidden="true"></i> Go back</a></h4>
+            <h3>Transaction</h3>
+            <table class="table tablesorter" id="transaction-table">
+                <thead class="text-primary">
+                <tr>
+                    <th>
+                        Hash
+                    </th>
+                    <th>
+                        Input
+                    </th>
+                    <th>
+                        Output
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script src="./assets/js/core/jquery.min.js"></script>
+<script src="./assets/js/core/popper.min.js"></script>
+<script src="./assets/js/core/bootstrap.min.js"></script>
+<script src="./assets/js/plugins/chartjs.min.js"></script>
+<script>
+    window.onload = function () {
+        try {
+            const url_string = (window.location.href).toLowerCase();
+            const url = new URL(url_string);
+            const hash = url.searchParams.get("hash");
+            fetch(`https://blockchain.info/rawtx/${hash}`)
+                .then(response => response.json())
+                .then(data => {
+                    const table = document.getElementById('transaction-table').getElementsByTagName('tbody')[0];
+                    const newRow = table.insertRow();
+                    let newRowString = "";
+                    newRowString += `<tr><td>${data.hash}</td>`
+
+                    newRowString += "<td>";
+                    data.inputs.forEach(input => {
+                        newRowString +=`<p style="color: red; margin: 0">${input.prev_out.value / 100000000} BTC</p>`
+                        newRowString += `${input.prev_out.addr}`;
+                        newRowString += `<br>`;
+                    })
+                    newRowString += "</td>"
+
+                    newRowString += "<td>";
+                    data.out.forEach(output => {
+                        newRowString +=`<p style="color: green; margin: 0">${output.value / 100000000} BTC</p>`
+                        newRowString += `${output.addr}`;
+                        newRowString += `<br>`;
+                    })
+                    newRowString += `</td></tr>`;
+                    newRow.innerHTML = newRowString;
+                })
+                .catch(err => console.log(err.stack))
+        } catch (err) {
+            console.log("Issues with Parsing URL Parameter's - " + err);
+        }
+    }
+</script>
+</body>
+
+</html>

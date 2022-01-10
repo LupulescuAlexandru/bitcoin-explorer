@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BTC Blockchain Explorer</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="./assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet"/>
+</head>
+
+<body class="">
+<div class="wrapper">
+    <div class="main-panel">
+        <div class="content">
+            <h2>BTC Blockchain Explorer</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-chart">
+                        <div class="card-header ">
+                            <div class="row">
+                                <div class="col-sm-6 text-left">
+                                    <h5 class="card-category">BTC-USD</h5>
+                                    <h2 class="card-title">Bitcoin Historical Price (last week)</h2>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas id="chartBig1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Last blocks</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table tablesorter" id="latestBlocks">
+                                    <thead class="text-primary">
+                                    <tr>
+                                        <th>
+                                            Hash
+                                        </th>
+                                        <th>
+                                            Height
+                                        </th>
+                                        <th>
+                                            Time
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Last unconfirmed transactions</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table tablesorter" id="latestTransactions">
+                                    <thead class="text-primary">
+                                    <tr>
+                                        <th>
+                                            Hash
+                                        </th>
+                                        <th>
+                                            Size
+                                        </th>
+                                        <th>
+                                            Fee
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="card-crypto card">
+                        <h4 class="card-title">Bitcoins in circulation</h4>
+                        <h4 id="btc-circulation" class="card-title">5</h4>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card-crypto card">
+                        <h4 class="card-title">Reward per block</h4>
+                        <h4 id="reward-per-block" class="card-title">5</h4>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card-crypto card">
+                        <h4 class="card-title">Current difficulty</h4>
+                        <h4 id="btc-diff" class="card-title">5</h4>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card-crypto card">
+                        <h4 class="card-title">Hashrate (gigahash)</h4>
+                        <h4 id="hashrate" class="card-title">5</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card-crypto card">
+                        <h4 class="card-title">Average number of hash attempts needed to solve a block</h4>
+                        <h4 id="avg-hashrate" class="card-title">5</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<script src="./assets/js/core/jquery.min.js"></script>
+<script src="./assets/js/core/popper.min.js"></script>
+<script src="./assets/js/core/bootstrap.min.js"></script>
+<script src="./assets/js/plugins/chartjs.min.js"></script>
+<script src="./assets/js/dashboard.js"></script>
+<script>
+    window.onload = function () {
+        demo.initDashboardPageCharts();
+    }
+</script>
+</body>
+
+</html>

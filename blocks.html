@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BTC Blockchain Explorer</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="./assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet"/>
+</head>
+
+<body class="">
+<div class="wrapper">
+    <div class="main-panel">
+        <div class="content">
+            <h4><a href="/"><i class="fa fa-arrow-left" aria-hidden="true"></i> Go back</a></h4>
+            <h3 id="transactionName"></h3>
+            <table class="table tablesorter" id="transactions-table">
+                <thead class="text-primary">
+                <tr>
+                    <th>
+                        Hash
+                    </th>
+                    <th>
+                        Size
+                    </th>
+                    <th>
+                        Fee
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script src="./assets/js/core/jquery.min.js"></script>
+<script src="./assets/js/core/popper.min.js"></script>
+<script src="./assets/js/core/bootstrap.min.js"></script>
+<script src="./assets/js/plugins/chartjs.min.js"></script>
+<script>
+    window.onload = function () {
+        try {
+            const url_string = (window.location.href).toLowerCase();
+            const url = new URL(url_string);
+            const hash = url.searchParams.get("hash");
+            document.getElementById("transactionName").innerHTML = `Block ${hash}`;
+
+            fetch(`https://blockchain.info/rawblock/${hash}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const firstHundredTransactions = data.tx.slice(0, 101);
+                    const table = document.getElementById('transactions-table').getElementsByTagName('tbody')[0];
+                    firstHundredTransactions.forEach(transaction => {
+                        const newRow = table.insertRow();
+                        newRow.innerHTML = `<tr><td><a href="/transaction.html?hash=${transaction.hash}">${transaction.hash}</a></td><td>${transaction.size}</td><td>${transaction.fee}</td></tr>`;
+                    })
+                })
+                .catch(err => console.log(err.stack))
+        } catch (err) {
+            console.log("Issues with Parsing URL Parameter's - " + err);
+        }
+    }
+</script>
+</body>
+
+</html>
